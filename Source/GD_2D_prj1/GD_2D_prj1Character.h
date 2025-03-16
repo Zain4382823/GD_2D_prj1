@@ -58,6 +58,12 @@ protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	// End of APawn interface
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerAttributes|Stamina")
+	// code for controlling stamina of the player
+	int Stamina;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerAttributes|Stamina")
+	int MaxStamina = 100;
+
 public:
 	AGD_2D_prj1Character();
 
