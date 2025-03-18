@@ -99,23 +99,6 @@ void AGD_2D_prj1Character::Tick(float DeltaSeconds)
 	UpdateCharacter();	
 }
 
-bool AGD_2D_prj1Character::HasStamina() const
-{
-	return Stamina > 0;
-}
-
-void AGD_2D_prj1Character::RechargeStamina()
-{
-	if (Stamina < MaxStamina)
-	{
-		Stamina += 5; // Recharge stamina by 5 units per second
-	}
-	else
-	{
-		GetWorld()->GetTimerManager().ClearTimer(StaminaRechargeHandle);
-	}
-}
-
 
 //////////////////////////////////////////////////////////////////////////
 // Input
@@ -129,16 +112,6 @@ void AGD_2D_prj1Character::SetupPlayerInputComponent(class UInputComponent* Play
 
 	PlayerInputComponent->BindTouch(IE_Pressed, this, &AGD_2D_prj1Character::TouchStarted);
 	PlayerInputComponent->BindTouch(IE_Released, this, &AGD_2D_prj1Character::TouchStopped);
-}
-
-void AGD_2D_prj1Character::Jump()
-{
-	if (HasStamina() && Stamina > 20)
-	{
-		Super::Jump();
-		Stamina -= 20; // Deplete stamina by 10 units
-		GetWorld()->GetTimerManager().SetTimer(StaminaRechargeHandle, this, &AGD_2D_prj1Character::RechargeStamina, 1.0f, true);
-	}
 }
 
 void AGD_2D_prj1Character::MoveRight(float Value)
@@ -165,8 +138,6 @@ void AGD_2D_prj1Character::UpdateCharacter()
 {
 	// Update animation to match the motion
 	UpdateAnimation();
-
-	RechargeStamina();
 
 	// Now setup the rotation of the controller based on the direction we are travelling
 	const FVector PlayerVelocity = GetVelocity();	
