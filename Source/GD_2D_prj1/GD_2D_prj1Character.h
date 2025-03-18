@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "PaperCharacter.h"
+#include "EnhancedInputComponent.h"
+#include "InputActionValue.h"
 #include "GD_2D_prj1Character.generated.h"
 
 class UTextRenderComponent;
@@ -16,6 +18,12 @@ class UTextRenderComponent;
  * The CharacterMovementComponent (inherited from ACharacter) handles movement of the collision capsule
  * The Sprite component (inherited from APaperCharacter) handles the visuals
  */
+
+class UInputMappingContext;
+
+class UInputAction;
+
+
 UCLASS(config=Game)
 class AGD_2D_prj1Character : public APaperCharacter
 {
@@ -44,7 +52,7 @@ protected:
 	void UpdateAnimation();
 
 	/** Called for side to side input */
-	void MoveRight(float Value);
+	void MoveRight(const FInputActionValue& Value);
 
 	void UpdateCharacter();
 
@@ -66,6 +74,12 @@ protected:
 
 public:
 	AGD_2D_prj1Character();
+
+	// The Players input mapping context
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "EnhancedInput")
+	UInputMappingContext* InputMapping;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "EnhancedInput")
+	UInputAction* IA_Move;
 
 	/** Returns SideViewCameraComponent subobject **/
 	FORCEINLINE class UCameraComponent* GetSideViewCameraComponent() const { return SideViewCameraComponent; }
