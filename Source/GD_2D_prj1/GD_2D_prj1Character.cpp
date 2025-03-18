@@ -130,7 +130,7 @@ void AGD_2D_prj1Character::MoveRight(const FInputActionValue& Value)
 	/*UpdateChar();*/
 
 	// Apply the input to the character motion
-	AddMovementInput(FVector(1.0f, 0.0f, 0.0f), Value);
+	//AddMovementInput(FVector(1.0f, 0.0f, 0.0f), Value);
 
 	Value.Get<float>();
 	UEnhancedInputComponent* Input = Cast<UEnhancedInputComponent>(PlayerInputComponent);
