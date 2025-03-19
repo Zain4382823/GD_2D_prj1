@@ -121,6 +121,10 @@ void AGD_2D_prj1Character::SetupPlayerInputComponent(class UInputComponent* Play
 
 	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
 
+	// this should be in the setup up
+	UEnhancedInputComponent* Input = Cast<UEnhancedInputComponent>(PlayerInputComponent);
+	Input->BindAction(IA_Move, ETriggerEvent::Triggered, this, &AGD_2D_prj1Character::MoveRight);
+
 	Subsystem->ClearAllMappings();
 	Subsystem->AddMappingContext(InputMapping, 0);
 }
@@ -132,9 +136,9 @@ void AGD_2D_prj1Character::MoveRight(const FInputActionValue& Value)
 	// Apply the input to the character motion
 	//AddMovementInput(FVector(1.0f, 0.0f, 0.0f), Value);
 
-	Value.Get<float>();
-	UEnhancedInputComponent* Input = Cast<UEnhancedInputComponent>(PlayerInputComponent);
-	Input->BindAction(IA_Move, ETriggerEvent::Triggered, this, &AGD_2D_prj1Character::MoveRight);
+	//Value.Get<float>();
+	// this update the system
+	AddMovementInput(FVector(1.0f, 0.0f, 0.0f), Value.Get<float>());
 }
 
 void AGD_2D_prj1Character::TouchStarted(const ETouchIndex::Type FingerIndex, const FVector Location)
