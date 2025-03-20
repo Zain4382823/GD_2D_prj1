@@ -125,6 +125,10 @@ void AGD_2D_prj1Character::SetupPlayerInputComponent(class UInputComponent* Play
 	UEnhancedInputComponent* Input = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 	Input->BindAction(IA_Move, ETriggerEvent::Triggered, this, &AGD_2D_prj1Character::MoveRight);
 
+	// Bind the jump action
+	Input->BindAction(IA_Jump, ETriggerEvent::Triggered, this, &ACharacter::Jump);
+	Input->BindAction(IA_Jump, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
+
 	Subsystem->ClearAllMappings();
 	Subsystem->AddMappingContext(InputMapping, 0);
 }
