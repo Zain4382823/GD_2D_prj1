@@ -22,9 +22,8 @@ void ABreakableScenery::BeginPlay()
 }
 
 // Called every frame
-//void ABreakableScenery::Tick(float DeltaTime)
-//{
-//	Super::Tick(DeltaTime);
-//
-//}
+/*void ABreakableScenery::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+}*/
 
