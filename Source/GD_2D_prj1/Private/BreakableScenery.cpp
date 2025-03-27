@@ -12,6 +12,14 @@ ABreakableScenery::ABreakableScenery()
 	// Create the sprite component
 	Sprite = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("SpriteComponent"));
 	RootComponent = Sprite;
+
+	// Create the collider component
+	Collider = CreateDefaultSubobject<UBoxComponent>(TEXT("ColliderComponent"));
+	Collider->SetupAttachment(RootComponent);
+
+	Collider->SetBoxExtent(FVector(8.0f, 8.0f, 8.0f)); // Set the size of the box collider
+	Collider->SetCollisionProfileName(TEXT("BlockAll")); // Set the collision profile
+
 }
 
 // Called when the game starts or when spawned
