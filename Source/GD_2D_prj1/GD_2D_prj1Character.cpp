@@ -20,6 +20,10 @@ DEFINE_LOG_CATEGORY_STATIC(SideScrollerCharacter, Log, All);
 
 AGD_2D_prj1Character::AGD_2D_prj1Character()
 {
+
+	// Bind the overlap event 
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AGD_2D_prj1Character::OnOverlapBegin);
+
 	// Use only Yaw from the controller and ignore the rest of the rotation.
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = true;
@@ -178,3 +182,31 @@ void AGD_2D_prj1Character::UpdateCharacter()
 		}
 	}
 }
+
+void AGD_2D_prj1Character::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Overlapped"));
+	if (OtherActor && (OtherActor != this))
+	{
+		// Print all tags of the other actor 
+		for (const FName& Tag : OtherActor->Tags)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Collided with an object with tag: %s"), *Tag.ToString());
+		}
+
+		// Check if the collided actor has the "Enemy" tag
+		if (OtherActor->ActorHasTag("Enemy"))
+		{
+			// Calculate bounce direction
+			FVector BounceDirection = GetActorLocation() - OtherActor->GetActorLocation();
+			BounceDirection.Normalize();
+
+			// Apply the force
+			FVector Impulse = BounceDirection * 2500.0f;
+
+			// Push the player
+			GetCharacterMovement()->AddImpulse(Impulse, true);
+		}
+	}
+}
+

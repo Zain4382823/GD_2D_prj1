@@ -6,6 +6,7 @@
 #include "PaperCharacter.h"
 #include "EnhancedInputComponent.h"
 #include "InputActionValue.h"
+#include "Components/PrimitiveComponent.h"
 #include "GD_2D_prj1Character.generated.h"
 
 class UTextRenderComponent;
@@ -39,6 +40,7 @@ class AGD_2D_prj1Character : public APaperCharacter
 
 	UTextRenderComponent* TextComponent;
 	virtual void Tick(float DeltaSeconds) override;
+
 protected:
 	// The animation to play while running around
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Animations)
@@ -47,6 +49,10 @@ protected:
 	// The animation to play while idle (standing still)
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Animations)
 	class UPaperFlipbook* IdleAnimation;
+
+	// Function to handle collisions
+	UFUNCTION(BlueprintCallable, Category = "Collision")
+	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	/** Called to choose the correct animation to play based on the character's movement state */
 	void UpdateAnimation();
@@ -83,6 +89,7 @@ public:
 	// Add this line to define the input action for jump
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "EnhancedInput")
 	UInputAction* IA_Jump;
+
 
 	/** Returns SideViewCameraComponent subobject **/
 	FORCEINLINE class UCameraComponent* GetSideViewCameraComponent() const { return SideViewCameraComponent; }
