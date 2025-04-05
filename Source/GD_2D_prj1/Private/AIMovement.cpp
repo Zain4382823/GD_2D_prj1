@@ -36,7 +36,7 @@ void UAIMovement::BeginPlay()
 void UAIMovement::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
+	MoveToNextPatrolNode();
 }
 
 void UAIMovement::MoveToNextPatrolNode()
@@ -54,15 +54,22 @@ void UAIMovement::MoveToNextPatrolNode()
 
 	if (OwnerPawn->GetActorLocation().X > PatrolNodes[CurrentPatrolNodeIndex]->GetActorLocation().X) // are we moving left or right?
 	{
-		// move left
+		OwnerPawn->MoveRight(-1.0f); // move left
 	}
 	else
 	{
-		// move right
+		OwnerPawn->MoveRight(1.0f); // move right
 	}
 
 	// check if we have reached the patrol node
 
 }
+
+void AEnemy::MoveRight(const FInputActionValue& Value)
+{
+	// Apply the input to the character motion
+	SetActorLocation(GetActorLocation() + FVector(1.0f, 0.0f, 0.0f) * Value.Get<float>()); // this is different but some reason the normal way failed. 
+}
+
 
 

@@ -21,6 +21,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI Pathfinding")
 	TArray<AActor*> PatrolNodes;
 
+	// enable the Enemy to move
+	void MoveRight(const FInputActionValue& Value);
+
 
 protected:
 	// Called when the game starts
